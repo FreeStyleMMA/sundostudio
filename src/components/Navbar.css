@@ -1,0 +1,33 @@
+#nav {
+  height: 50px;
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+}
+
+.navLogo {
+  margin-left: 10px;
+  margin-right: 100px;
+}
+
+.navBar {
+  flex: 1;
+  /* 왼쪽 로고와 오른쪽 링크 사이 공간 확보 */
+  margin-right: 10px;
+
+}
+
+.navLinkGroup {
+  display: flex;
+  justify-content: flex-end;
+  /* 오른쪽 정렬 */
+  align-items: center;
+  gap: 20px;
+  margin-right: 10px;
+}
+
+.navLink {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}

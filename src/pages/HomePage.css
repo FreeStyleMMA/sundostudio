@@ -1,0 +1,76 @@
+.HomeTop {
+  height: 1200px;
+  /* background-color: rgb(238, 238, 238); */
+}
+
+.HomeIntro {
+  margin-left: 50px;
+  font-size: 30px;
+  font-weight: 750;
+}
+
+.IntroPic {
+  height: 1000px;
+}
+
+.sundostudioImg {
+  height: 900px;
+  width: 100%;
+}
+
+.HomeBody {
+  display: flex;
+  gap: 100px;
+}
+
+.LinkProfile {
+  padding: 30px;
+  width: 700px;
+  height: 1000px;
+  margin-left: 70px;
+  padding-bottom: 0;
+}
+
+#sundoprofile {
+  width: 550px;
+  height: 700px;
+  /* display: flex;
+  justify-content: center; */
+}
+
+.profileIntro {
+  margin-left: 20px;
+  font-size: 25px;
+  font-weight: 450;
+}
+
+.LinkRental {
+  padding: 30px;
+  width: 700px;
+  height: 1000px;
+  padding-bottom: 0;
+}
+
+#sundorental {
+  width: 550px;
+  height: 700px;
+  /* display: flex;
+  justify-content: center; */
+}
+
+.rentalIntro {
+  margin-left: 20px;
+  font-size: 25px;
+  font-weight: 450;
+}
+
+.IntroPic {
+  background-color: #969696;
+  height: 800px;
+}
+
+.equipment {
+  padding-top: 20px;
+  width: 100%;
+  height: 1000px;
+}
