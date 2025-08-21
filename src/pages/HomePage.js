@@ -4,7 +4,7 @@ import sundoprofile from '../assets/sundoprofile.jpg';
 import sundorental from '../assets/sundorental.png';
 import sundostudioImg from '../assets/sundostudioImg.png';
 import EquipmentUpload from '../components/EquipmentUpload';
-
+import LoginPage from './LoginPage'
 function HomePage() {
   return (
     <div>
@@ -60,7 +60,8 @@ function HomePage() {
       <div className='equipment'>
         장비<br></br>
         **여기는 예린이가 직접 업데이트 할 수 있게 만들어주자
-        <EquipmentUpload />
+
+        {/* <EquipmentUpload /> */}
       </div>
     </div >
   )

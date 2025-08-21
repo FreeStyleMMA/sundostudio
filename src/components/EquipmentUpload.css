@@ -5,3 +5,26 @@
 .inputbox {
   width: 500px;
 }
+
+.pageLayout {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.inputBox {
+  margin-left: 50px;
+  width: 500px;
+  height: 30px;
+}
+
+.imageBox {
+  margin-left: 50px;
+}
+
+.manualBox {
+  margin-left: 50px;
+  width: 900px;
+  height: 800px;
+}

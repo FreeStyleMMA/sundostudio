@@ -1,7 +1,13 @@
 import { Link } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+
 import './Navbar.css'
 
 function Navbar() {
+  const token = localStorage.getItem('token');
+  const decoded = jwtDecode(token);
+  const roles = decoded.roles || [];
+  console.log("roles:" + roles);
   return (
     <nav id='nav' >
       <div className="navLogo">
@@ -15,7 +21,12 @@ function Navbar() {
           <Link to="/Rental" className='navLink'>렌탈 안내/예약</Link>
           <Link to="/Schedule" className='navLink'>스케쥴</Link>
           <Link to="/Map" className='navLink'>오시는 길</Link>
+          <Link to="/EquipmentAddPage" className='navLink'>장비 추가</Link>
           <Link to="/Login" className='navLink'>로그인</Link>
+          {/* {roles.includes('ROLE_ADMIN') && <Link to="/EquipmentAddPage" className='navLink'>장비 추가</Link>}
+          {roles.includes('ROLE_USER') && <Link to="/Login" className='navLink'>로그인</Link>} */}
+
+
         </div>
       </div>
     </nav>
