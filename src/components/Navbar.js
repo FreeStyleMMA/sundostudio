@@ -1,17 +1,13 @@
 import { Link } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-
 import './Navbar.css'
+import role from '../api/GetRole';
 
 function Navbar() {
-  const token = localStorage.getItem('token');
-  const decoded = jwtDecode(token);
-  const roles = decoded.roles || [];
-  console.log("roles:" + roles);
   return (
     <nav id='nav' >
       <div className="navLogo">
         순도 스튜디오 로고 거시기 하기
+
       </div>
       <div className='navBar'>
         <div className='navLinkGroup'>

@@ -1,75 +1,65 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import './LoginPage.css';
 import { jwtDecode } from 'jwt-decode';
 
-import axios from 'axios';
-
 function LoginPage() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
-  async function handleLogin(e) {
+  const [userid, setUserid] = useState("");
+  const [userpw, setUserpw] = useState("");
+  const [message, setMessage] = useState("");
+  const nav = useNavigate();
+
+
+
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    setLoading(true);
-    setError(null);
-
-    const form = e.target;
-    const userid = form.username.value;
-    const userpw = form.password.value;
-
     try {
-      // 1. CSRF 토큰 요청
-      const csrfRes = await axios.get("http://localhost:8080/api/csrf", { withCredentials: true });
-      console.log("토큰 가져오기");
-      const csrfToken = csrfRes.data.token;
-      const csrfHeader = csrfRes.data.headerName;
+      const response = await axios.post("http://localhost:8080/api/login", {
+        userid,
+        userpw
+      }, { withCredentials: true });
+      setMessage(response.data.message);
 
-      // 2. 로그인 요청
-      const response = await axios.post(
-        "http://localhost:8080/api/login",
-        { userid, userpw },
-        {
-          headers: { [csrfHeader]: csrfToken },
-          withCredentials: true
-        }
+      if (response.data.loginSuccess) {
+        nav('/')
 
-      );
+        const token = response.data.token;
+        console.log("token: " + token)
+        const decoded = jwtDecode(token);
 
-
-      const token = response.data.token;
-
-      localStorage.setItem('token', token)
-
-      // navigate('/dashboard'); // 페이지 이동
-    } catch (err) {
-      if (err.response) {
-        setError(err.response.data || '로그인 실패');
-      } else if (err.request) {
-        setError('서버 응답 없음');
-      } else {
-        setError(err.message);
+        console.log("decoded: " + decoded)
+        const role = decoded.role;  // USER, ADMIN 등
+        console.log("role: " + role);
       }
-    } finally {
-      setLoading(false)
     }
-    const token = localStorage.getItem('token');
-    const decoded = jwtDecode(token);
-    const roles = decoded.roles || []
-    console.log(roles)
-    console.log("token:" + token)
-    console.log("decoded:" + decoded)
+    catch (error) {
+      console.error(error);
+      setMessage("서버 오류 발생");
+    }
+    console.log("login message: " + message);
+    // token data test 용
+
   }
 
   return (
-    <form onSubmit={handleLogin}>
-      <input name="username" placeholder="아이디" required />
-      <input name="password" type="password" placeholder="비밀번호" required />
-      <button type='submit' disabled={loading}>{loading ? '로그인중...' : '로그인'}</button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-    </form>
-  )
-}
+    <div>
+      <form className="pageLayout" onSubmit={handleLogin}>
+        <div>
+          ID:
+          <input className="loginBox" type="text" placeholder="id를 입력하세요" value={userid} onChange={(e) => setUserid(e.target.value)} />
+        </div>
+        <div>
+          pw:
+          <input className="loginBox" type="password" placeholder="패스워드를 입력하세요" value={userpw} onChange={(e) => setUserpw(e.target.value)} />
+        </div>
+        <button type="submit" className="button" >로그인</button>
+      </form>
+      {message && <p>{message}</p>}
+    </div>
+  );
 
+}
 export default LoginPage;
