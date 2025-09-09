@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import './Navbar.css'
-import role from '../api/GetRole';
 
 function Navbar() {
   return (

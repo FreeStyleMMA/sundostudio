@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
 import './LoginPage.css';
-import { jwtDecode } from 'jwt-decode';
+import api from '../api/api';
+
 
 function LoginPage() {
 
@@ -15,33 +15,44 @@ function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    //서버에 로그인 요청
     try {
-      const response = await axios.post("http://localhost:8080/api/login", {
+      const response = await api.post("api/login", {
         userid,
         userpw
       }, { withCredentials: true });
+      //로그인 메세지(성공or실패)
       setMessage(response.data.message);
+      console.log("login message: " + response.data.message);
 
+      //로그인 성공 시 로직
       if (response.data.loginSuccess) {
-        nav('/')
 
-        const token = response.data.token;
-        console.log("token: " + token)
-        const decoded = jwtDecode(token);
+        // //jwt 해석 된 정보
+        // const token = Cookies.get("token")
+        // const decoded = jwtDecode(token);
+        // console.log("decoded: ", decoded)
 
-        console.log("decoded: " + decoded)
-        const role = decoded.role;  // USER, ADMIN 등
-        console.log("role: " + role);
+        //response에서 role 정보 추출
+        const authorities = response.data.authorities;
+        console.log("authorities: ", authorities);
+        //로그인 성공 후 role에 따른 페이지 분기
+        if (authorities.includes("ROLE_ADMIN")) {
+          nav('/admin');        // 관리자 페이지
+        } else if (authorities.includes("ROLE_MEMBER")) {
+          nav('/member');       // 일반 회원 페이지
+        } else {
+          nav('/');             // 그 외 기본 페이지
+        }
+      } else {
+        console.log("login message: " + response.data.message)
       }
     }
     catch (error) {
       console.error(error);
       setMessage("서버 오류 발생");
+      console.log("login message: 서버 오류 발생")
     }
-    console.log("login message: " + message);
-    // token data test 용
-
   }
 
   return (
